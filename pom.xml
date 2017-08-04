@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.mx.persist</groupId>
+    <artifactId>persist</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <modules>
+        <module>persist-app</module>
+    </modules>
+    <packaging>pom</packaging>
+
+    <name>persist</name>
+    <description>Demo project for Spring Boot</description>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.6.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <apache.common.version>3.6</apache.common.version>
+        <druid.version>1.1.2</druid.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <dependency>
+                <!-- Import dependency management from Spring Boot -->
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>1.5.6.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${apache.common.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.alibaba/druid -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+
+
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <!--&lt;!&ndash;源码资源文件管理&ndash;&gt;-->
+        <!--<sourceDirectory>${basedir}/src/main/java</sourceDirectory>-->
+        <!--<outputDirectory>${basedir}/target/classes</outputDirectory>-->
+        <!--<resources>-->
+        <!--<resource>-->
+        <!--<directory>${basedir}/src/main/java</directory>-->
+        <!--&lt;!&ndash;<includes>&ndash;&gt;-->
+        <!--&lt;!&ndash;<include>**/*.xml</include>&ndash;&gt;-->
+        <!--&lt;!&ndash;<include>**/*.cfg</include>&ndash;&gt;-->
+        <!--&lt;!&ndash;<include>**/*.png</include>&ndash;&gt;-->
+        <!--&lt;!&ndash;<include>**/*.tld</include>&ndash;&gt;-->
+        <!--&lt;!&ndash;<include>**/*.properties</include>&ndash;&gt;-->
+        <!--&lt;!&ndash;</includes>&ndash;&gt;-->
+        <!--<excludes>-->
+        <!--<exclude>**/*.java</exclude>-->
+        <!--</excludes>-->
+        <!--<filtering>true</filtering>-->
+        <!--</resource>-->
+        <!--<resource>-->
+        <!--<directory>${basedir}/src/main/resources</directory>-->
+        <!--<filtering>true</filtering>-->
+        <!--</resource>-->
+        <!--</resources>-->
+        <!--<testResources>-->
+        <!--<testResource>-->
+        <!--<directory>src/test/java</directory>-->
+        <!--<excludes>-->
+        <!--<exclude>**/*.java</exclude>-->
+        <!--</excludes>-->
+        <!--<filtering>true</filtering>-->
+        <!--</testResource>-->
+        <!--<testResource>-->
+        <!--<directory>src/test/resources</directory>-->
+        <!--<filtering>true</filtering>-->
+        <!--</testResource>-->
+        <!--</testResources>-->
+
+        <pluginManagement>
+            <plugins>
+                <!-- 资源插件 -->
+                <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-resources-plugin</artifactId>-->
+                <!--<version>${maven-resources-plugin.version}</version>-->
+                <!--<configuration>-->
+                <!--<encoding>${project.build.sourceEncoding}</encoding>-->
+                <!--</configuration>-->
+                <!--</plugin>-->
+                <!-- 编译插件 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                    </configuration>
+                </plugin>
+
+                <!-- 单元测试插件 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven-surefire-plugin.version}</version>
+                    <configuration>
+                        <useSystemClassLoader>false</useSystemClassLoader>
+                        <skip>true</skip>
+                    </configuration>
+                </plugin>
+                <!-- 源码插件 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>${maven-source-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>jar-no-fork</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- 发布插件 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${maven-deploy-plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <profiles>
+        <profile>
+            <!-- 本地开发环境 -->
+            <id>dev</id>
+            <properties>
+                <profiles.active>dev</profiles.active>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <!-- 测试环境 -->
+            <id>test</id>
+            <properties>
+                <profiles.active>test</profiles.active>
+            </properties>
+        </profile>
+        <profile>
+            <!-- 生产环境 -->
+            <id>product</id>
+            <properties>
+                <profiles.active>product</profiles.active>
+            </properties>
+        </profile>
+    </profiles>
+
+</project>
